@@ -1,0 +1,71 @@
+/*================================================
+	Bismillahir Rahmaneer Rahim
+	Nahmaduhu Wa Nusalli Ala Rasoolihii Kareem Amma 'Baad
+	Astagfirullahi Rabbi Minkulli Zambiu Wa Atub hi ilayhi 
+	La haula wala ku ata illa billahi 'Alium 'Azim
+	Rabbi zidni  'Ilmah
+==================================================*/
+
+#include<bits/stdc++.h>
+#define ll long long
+#define MX 10000000
+using namespace std;
+
+vector <int> graph[MX];
+bool visited[MX];
+int Distance[MX];
+
+
+void bfs(int source)
+{
+	visited[source] = 1; //The source is visited for sure
+	Distance[source] = 0; // First Source's Level is 0 or distance is 0;
+	queue <int> Q; // We will not move to next level until the current level is done
+				  // and for this we will use a queue which will first in and first out method
+	
+	Q.push(source); // we will make the source as the base first value of the queue
+
+	while(!Q.empty())
+	{
+		int node = Q.front(); // will take the first value of the queue
+		Q.pop(); // will take out the 
+		//in for loop will iterate the first queue until the queue is empty
+		for(int i=0; i<graph[node].size(); i++)
+		{
+			int next = graph[node][i]; // we will then check the node number vector's all index
+			if(visited[next] == 0)
+			{
+				visited[next] = 1;
+				Distance[next] = Distance[node] + 1; // As it is an unweigted graph so 1
+				Q.push(next);				
+			}
+		}
+	}
+}
+int main()
+{
+	#ifndef ONLINE_JUDGE
+	freopen("C:/Users/Administrator/Desktop/input.txt", "r", stdin);
+	freopen("C:/Users/Administrator/Desktop/output.txt", "w", stdout);
+	#endif
+	int node, edge;
+	cin >> node >> edge;
+	for(int i=1; i<=edge; i++)
+	{
+		int n, e;
+		cin >> n >> e;
+		graph[n].push_back(e);
+		graph[e].push_back(n);
+	}
+	int TakeSource;
+	cin >> TakeSource;
+	bfs(TakeSource);
+	cout << "Level From " << TakeSource <<  " is : " << endl;
+	for(int i=1; i<=node; i++)
+	{
+		cout << "Distance of " << i << " is :-> " << Distance[i] << endl;
+	}
+
+	return 0;
+
+}
